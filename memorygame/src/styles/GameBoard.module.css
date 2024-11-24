@@ -1,0 +1,132 @@
+/* Container to hold both the game and leaderboard */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100vh;
+    padding: 2rem;
+}
+
+/* Game and leaderboard section wrapper */
+.gameAndLeaderboard {
+    display: flex;
+    width: 100%;
+    gap: 2rem;
+}
+
+.gameBoard {
+    width: 66%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    transition: transform 0.3s ease-in-out;
+    justify-items: center;
+}
+
+.leaderboard {
+    width: 33%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    overflow-y: auto;
+    height: 100%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.header h1, .header h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(4, 9rem);
+    gap: 2rem;
+    margin-top: 2rem;
+    justify-items: center;
+}
+
+.comments {
+    padding: 0.5rem;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    background-color: #e0f7fa;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.button {
+    padding: 0.8rem 1.5rem;
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    margin-top: 2rem;
+}
+
+.button:hover {
+    background-color: #ff1f72;
+}
+
+/* Smooth hover transition for cards */
+.item .face, .item .back {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+.toggled .face {
+    transform: rotateY(0deg);
+}
+
+.toggled .back {
+    transform: rotateY(90deg);
+}
+
+/* Leaderboard styles */
+.leaderboard h3 {
+    text-align: center;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.leaderboard ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.leaderboard li {
+    background-color: #f1f1f1;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.leaderboard li:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard li span {
+    font-weight: bold;
+}
+
+.leaderboard li .date {
+    color: #777;
+    font-size: 0.9rem;
+}

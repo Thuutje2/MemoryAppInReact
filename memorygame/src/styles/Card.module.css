@@ -1,0 +1,33 @@
+.face {
+    height: 6rem;
+}
+
+.back {
+    height: 6rem;
+    width: 6rem;
+    background-color: rgb(253, 218, 175);
+    color: rgb(61, 21, 21);
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.item .face {
+    position: absolute;
+    transform: rotateY(90deg);
+    transition: all ease-in 0.25s;
+}
+
+.toggled .face {
+    transform: rotateY(0deg);
+    transition-delay: 0.25s;
+}
+
+.item .back {
+    transition: all ease-in 0.25s;
+    transition-delay: 0.25s;
+}
+
+.toggled .back {
+    transform: rotateY(90deg);
+    transition-delay: 0s;
+}
