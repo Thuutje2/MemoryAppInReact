@@ -1,86 +1,81 @@
+import hondIMG from '../pictures/hond.JPG';
+import katIMG from '../pictures/kat.JPG';
+import otterIMG from '../pictures/otter.jpg';
+import pandaIMG from '../pictures/panda.png';
+import rodePandaIMG from '../pictures/rodepanda.jpg';
+import tijgerIMG from '../pictures/tijger.png';
+
 const Data = [
     {
         id: 1,
-        name: "react",
-        img:
-            "https://media.geeksforgeeks.org/wp-content/uploads/20230927165802/atom-4.png",
+        name: "hond",
+        img: hondIMG,
         matched: false,
     },
     {
         id: 2,
-        name: "java",
-        img:
-            "https://media.geeksforgeeks.org/wp-content/uploads/20230927165803/java.png",
+        name: "kat",
+        img: katIMG,
         matched: false,
     },
     {
         id: 3,
-        name: "css",
-        img:
-            "https://media.geeksforgeeks.org/wp-content/uploads/20230927165803/css-3-1.png",
+        name: "otter",
+        img: otterIMG,
         matched: false,
     },
     {
         id: 4,
-        name: "node",
-        img:
-            "https://media.geeksforgeeks.org/wp-content/uploads/20230927165805/nodejs-1.png",
+        name: "panda",
+        img: pandaIMG,
         matched: false,
     },
     {
         id: 5,
-        name: "html",
-        img:
-            "https://media.geeksforgeeks.org/wp-content/uploads/20230927165806/html-5-1.png",
+        name: "rode_panda",
+        img: rodePandaIMG,
         matched: false,
     },
     {
         id: 6,
-        name: "js",
-        img:
-            "https://media.geeksforgeeks.org/wp-content/uploads/20230927165804/js-3.png",
+        name: "tijger",
+        img: tijgerIMG,
         matched: false,
     },
     {
         id: 7,
-        name: "react",
-        img:
-            "https://media.geeksforgeeks.org/wp-content/uploads/20230927165802/atom-4.png",
+        name: "hond",
+        img: hondIMG,
         matched: false,
     },
     {
         id: 8,
-        name: "java",
-        img:
-            "https://media.geeksforgeeks.org/wp-content/uploads/20230927165803/java.png",
+        name: "kat",
+        img: katIMG,
         matched: false,
     },
     {
         id: 9,
-        name: "css",
-        img:
-            "https://media.geeksforgeeks.org/wp-content/uploads/20230927165803/css-3-1.png",
+        name: "otter",
+        img: otterIMG,
         matched: false,
     },
     {
         id: 10,
-        name: "node",
-        img:
-            "https://media.geeksforgeeks.org/wp-content/uploads/20230927165805/nodejs-1.png",
+        name: "panda",
+        img: pandaIMG,
         matched: false,
     },
     {
         id: 11,
-        name: "html",
-        img:
-            "https://media.geeksforgeeks.org/wp-content/uploads/20230927165806/html-5-1.png",
+        name: "rode_panda",
+        img: rodePandaIMG,
         matched: false,
     },
     {
         id: 12,
-        name: "js",
-        img:
-            "https://media.geeksforgeeks.org/wp-content/uploads/20230927165804/js-3.png",
+        name: "tijger",
+        img: tijgerIMG,
         matched: false,
     },
 ];

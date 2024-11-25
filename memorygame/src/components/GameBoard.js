@@ -8,140 +8,88 @@ function GameBoard() {
     const [moves, setMoves] = React.useState(0);
     const [firstCard, setFirstCard] = React.useState(null);
     const [secondCard, setSecondCard] = React.useState(null);
-    const [stopFlip, setStopFlip] = React.useState(false);
+    // const [stopFlip, setStopFlip] = React.useState(false);
     const [won, setWon] = React.useState(0);
     const [winsHistory, setWinsHistory] = React.useState([]);  // History of each win (moves)
 
-    // Load leaderboard data from localStorage
+
     React.useEffect(() => {
-        const savedWinsHistory = JSON.parse(localStorage.getItem("winsHistory")) || [];
-        setWinsHistory(savedWinsHistory);
+        const savedWins = JSON.parse(localStorage.getItem("winsHistory")) || [];
+        setWinsHistory(savedWins);
+        startNewGame();
     }, []);
 
-    function NewGame() {
-        setTimeout(() => {
-            const randomOrderArray = Data.sort(() => 0.5 - Math.random());
-            setCardsArray(randomOrderArray);
-            setMoves(0);
-            setFirstCard(null);
-            setSecondCard(null);
-            setWon(0);
-        }, 1200);
-    }
-
-    // Function to handle selected cards
-    function handleSelectedCards(item) {
-        if (firstCard !== null && firstCard.id !== item.id) {
-            setSecondCard(item);
-        } else {
-            setFirstCard(item);
-        }
-    }
-
-    // Check if the selected cards match and update game state
-    React.useEffect(() => {
-        if (firstCard && secondCard) {
-            setStopFlip(true);
-
-            if (firstCard.name === secondCard.name) {
-                setCardsArray((prevArray) => {
-                    return prevArray.map((unit) => {
-                        if (unit.name === firstCard.name) {
-                            return { ...unit, matched: true };
-                        } else {
-                            return unit;
-                        }
-                    });
-                });
-                setWon((preVal) => preVal + 1);
-                removeSelection();
-            } else {
-                setTimeout(() => {
-                    removeSelection();
-                }, 1000);
-            }
-        }
-    }, [firstCard, secondCard]);
-
-    // Remove selection after checking for match
-    function removeSelection() {
+    function startNewGame() {
+        const shuffledArray = [...Data].sort(() => Math.random() - 0.5);
+        setCardsArray(shuffledArray);
+        setMoves(0);
         setFirstCard(null);
         setSecondCard(null);
-        setStopFlip(false);
-        setMoves((prevValue) => prevValue + 1);
+        setWon(0);
     }
 
-    function addWin() {
-        if (won === 6) {  // Only add win when all cards are matched
-            const newWin = { moves, date: new Date() };
-            const updatedWinsHistory = [...winsHistory, newWin];
-            setWinsHistory(updatedWinsHistory);
-
-            // Save the updated history to localStorage
-            localStorage.setItem("winsHistory", JSON.stringify(updatedWinsHistory));
-        }
+    function handleCardSelect(card) {
+        firstCard ? setSecondCard(card) : setFirstCard(card);
     }
 
     React.useEffect(() => {
-        NewGame();
-    }, []);
+        if (firstCard && secondCard) {
+            if (firstCard.name === secondCard.name) {
+                setCardsArray((prev) =>
+                    prev.map((card) =>
+                        card.name === firstCard.name ? { ...card, matched: true } : card
+                    )
+                );
+                setWon((prev) => prev + 1);
+            }
+            setTimeout(() => resetSelection(), 1000);
+        }
+    }, [firstCard, secondCard])
 
-    const sortedWins = [...winsHistory].sort((a, b) => a.moves - b.moves);
+    function resetSelection() {
+        setFirstCard(null);
+        setSecondCard(null);
+        setMoves((prev) => prev + 1);
+    }
 
     React.useEffect(() => {
-        if (won === 6) {
-            addWin();
+        if (won === Data.length / 2){
+            const newWin = { moves, date: new Date().toLocaleString()};
+            const updatedHistory = [...winsHistory, newWin].sort((a, b) => a.moves - b.moves);
+            setWinsHistory(updatedHistory);
+            localStorage.setItem("winsHistory", JSON.stringify(updatedHistory));
         }
-    }, [won]);
+    }, [won])
 
     return (
         <div className={styles.container}>
             <div className={styles.gameAndLeaderboard}>
-                {/* Game section */}
                 <div className={styles.gameBoard}>
-                    {/* Game board and current win status */}
-                    <div className={styles.header}>
-                        {won === 6 ? (
-                            <h2>You Won in {moves} moves</h2>
-                        ) : (
-                            <h1>Memory Game</h1>
-                        )}
-                    </div>
+                    <h2>{won === Data.length / 2 ? `You Won in ${moves} moves!` : "Memory Game"}</h2>
 
-                    {/* Game board */}
                     <div className={styles.board}>
-                        {
-                            cardsArray.map((item) => (
-                                <Card
-                                    item={item}
-                                    key={item.id}
-                                    handleSelectedCards={handleSelectedCards}
-                                    toggled={item === firstCard || item === secondCard || item.matched === true}
-                                    stopflip={stopFlip}
-                                />
-                            ))
-                        }
+                        {cardsArray.map((card) => (
+                            <Card
+                                key={card.id}
+                                item={card}
+                                handleSelectedCards={handleCardSelect}
+                                toggled={card === firstCard || card === secondCard || card.matched}
+                            />
+                        ))}
                     </div>
 
-                    {/* Display moves and New Game button */}
-                    {won !== 6 ? (
-                        <div className={styles.comments}>Moves: {moves}</div>
-                    ) : (
-                        <div className={styles.comments}>You Won in {moves} moves</div>
-                    )}
-
-                    <button className={styles.button} onClick={NewGame}>
+                    <div className={styles.comments}>Moves: {moves}</div>
+                    <button className={styles.button} onClick={startNewGame}>
                         New Game
                     </button>
                 </div>
 
-                {/* Leaderboard section */}
                 <div className={styles.leaderboard}>
                     <h3>Leaderboard</h3>
                     <ul>
-                        {sortedWins.map((win, index) => (
+                        {winsHistory.map((win, index) => (
                             <li key={index}>
-                                Round {index + 1}: {win.moves} moves ({win.date.toLocaleString()})
+                                Round {index + 1}: {win.moves} moves ({win.date})
                             </li>
                         ))}
                     </ul>

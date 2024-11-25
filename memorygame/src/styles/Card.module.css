@@ -5,10 +5,8 @@
 .back {
     height: 6rem;
     width: 6rem;
-    background-color: rgb(253, 218, 175);
-    color: rgb(61, 21, 21);
+    background-color: rgb(123, 199, 216);
     border: 1px solid black;
-    border-radius: 50%;
 }
 
 .item .face {
