@@ -8,9 +8,8 @@ function GameBoard() {
     const [moves, setMoves] = React.useState(0);
     const [firstCard, setFirstCard] = React.useState(null);
     const [secondCard, setSecondCard] = React.useState(null);
-    // const [stopFlip, setStopFlip] = React.useState(false);
     const [won, setWon] = React.useState(0);
-    const [winsHistory, setWinsHistory] = React.useState([]);  // History of each win (moves)
+    const [winsHistory, setWinsHistory] = React.useState([]);
 
 
     React.useEffect(() => {
@@ -49,17 +48,32 @@ function GameBoard() {
     function resetSelection() {
         setFirstCard(null);
         setSecondCard(null);
-        setMoves((prev) => prev + 1);
+
+        // Update moves en wacht totdat alle updates correct zijn
+        setTimeout(() => {
+            setMoves((prevMoves) => prevMoves + 1);
+        }, 0);
     }
 
+
+
     React.useEffect(() => {
-        if (won === Data.length / 2){
-            const newWin = { moves, date: new Date().toLocaleString()};
-            const updatedHistory = [...winsHistory, newWin].sort((a, b) => a.moves - b.moves);
-            setWinsHistory(updatedHistory);
-            localStorage.setItem("winsHistory", JSON.stringify(updatedHistory));
+        if (won === Data.length / 2) {
+            // Wacht met het opslaan totdat de moves correct zijn bijgewerkt
+            const updatedMoves = moves + 1; // Voeg alvast 1 toe aan moves
+            const newWin = { moves: updatedMoves, date: new Date().toLocaleString() };
+
+            // Controleer of deze specifieke win nog niet is toegevoegd
+            if (!winsHistory.some((win) => win.moves === updatedMoves && win.date === newWin.date)) {
+                const updatedHistory = [...winsHistory, newWin];
+
+                // Update de geschiedenis en sla op
+                setWinsHistory(updatedHistory);
+                localStorage.setItem("winsHistory", JSON.stringify(updatedHistory));
+            }
         }
-    }, [won])
+    }, [won]);
+
 
     return (
         <div className={styles.container}>
@@ -87,13 +101,16 @@ function GameBoard() {
                 <div className={styles.leaderboard}>
                     <h3>Leaderboard</h3>
                     <ul>
-                        {winsHistory.map((win, index) => (
-                            <li key={index}>
-                                Round {index + 1}: {win.moves} moves ({win.date})
-                            </li>
-                        ))}
+                        {[...winsHistory]
+                            .sort((a, b) => a.moves - b.moves) // Sorteer hier
+                            .map((win, index) => (
+                                <li key={index}>
+                                    Round {index + 1}: {win.moves} moves ({win.date})
+                                </li>
+                            ))}
                     </ul>
                 </div>
+
             </div>
         </div>
     );
